@@ -1,4 +1,4 @@
-# Surgekerrent2v
+# Surgekurrent2v
 # Unfinished do not use
 Field-oriented control (FOC) firmware for e-scooter and e-bike hub/mid motors.
 Target: **STM32G474** (Cortex-M4F, 170 MHz) with 3 low-side shunts and a DRV8353 gate driver.

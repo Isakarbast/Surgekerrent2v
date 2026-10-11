@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # Firmware build:  cmake -B build-fw -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi.cmake
 # Host tests:      cmake -B build-host && cmake --build build-host && ctest --test-dir build-host
-project(Surgekerrent2v C ASM)
+project(Surgekurrent2v C ASM)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-sk2v_cli.py - talk to Surgekerrent2v firmware over the UART protocol.
+sk2v_cli.py - talk to Surgekurrent2v firmware over the UART protocol.
 
     pip install pyserial
     ./sk2v_cli.py -p /dev/ttyUSB0 ping
