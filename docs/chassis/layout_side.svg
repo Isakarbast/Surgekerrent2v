@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="960" viewBox="0 0 1200 960">
+<rect width="100%" height="100%" fill="#fbfbf8"/>
+<line x1="10.0" y1="720.0" x2="1180.0" y2="720.0" stroke="#888" stroke-width="1"/>
+<circle cx="190.0" cy="634.5" r="85.5" stroke="#333" stroke-width="3" fill="none"/>
+<circle cx="190.0" cy="634.5" r="49.5" stroke="#999" stroke-width="1" fill="none"/>
+<circle cx="190.0" cy="634.5" r="48.0" stroke="#c33" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+<circle cx="187.1" cy="569.4" r="87.2" stroke="#d77" stroke-width="1.5" fill="none" stroke-dasharray="6,4"/>
+<circle cx="187.1" cy="569.4" r="94.4" stroke="#f0b0b0" stroke-width="1" fill="none" stroke-dasharray="2,4"/>
+<circle cx="970.0" cy="634.5" r="85.5" stroke="#333" stroke-width="3" fill="none"/>
+<circle cx="970.0" cy="634.5" r="49.5" stroke="#999" stroke-width="1" fill="none"/>
+<circle cx="970.0" cy="634.5" r="48.0" stroke="#c33" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+<circle cx="939.6" cy="569.2" r="87.2" stroke="#d77" stroke-width="1.5" fill="none" stroke-dasharray="6,4"/>
+<line x1="1006.6" y1="720.0" x2="689.2" y2="39.4" stroke="#36c" stroke-width="1" stroke-dasharray="8,4"/>
+<line x1="966.2" y1="626.3" x2="816.0" y2="365.4" stroke="#555" stroke-width="7"/>
+<line x1="966.2" y1="626.3" x2="857.4" y2="346.1" stroke="#555" stroke-width="7"/>
+<polygon points="856.9,498.5 933.1,463.0 925.5,446.7 849.3,482.2" stroke="#555" fill="#bbb" fill-opacity="1.0" stroke-width="2"/>
+<polygon points="811.7,387.2 876.9,356.8 869.3,340.5 804.1,370.9" stroke="#555" fill="#bbb" fill-opacity="1.0" stroke-width="2"/>
+<line x1="836.7" y1="355.7" x2="704.4" y2="72.0" stroke="#444" stroke-width="8"/>
+<polygon points="866.7,474.1 908.1,454.8 865.0,362.4 823.6,381.7" stroke="#111" fill="#6a8fbf" fill-opacity="1.0" stroke-width="2"/>
+<polygon points="472.0,627.0 820.0,627.0 820.0,555.0 472.0,555.0" stroke="#111" fill="#d9e4f2" fill-opacity="1.0" stroke-width="2"/>
+<polygon points="480.4,622.2 763.0,622.2 763.0,570.6 480.4,570.6" stroke="#2a7" fill="#bfe8cf" fill-opacity="1.0" stroke-width="1.5"/>
+<text x="610.0" y="597.0" font-size="12" fill="#185" text-anchor="start" font-family="sans-serif">21700 cell block (20S7P)</text>
+<polygon points="764.2,622.2 812.8,622.2 812.8,561.0 764.2,561.0" stroke="#a60" fill="#f6deb0" fill-opacity="1.0" stroke-width="1.5"/>
+<text x="769.0" y="591.0" font-size="10" fill="#a60" text-anchor="start" font-family="sans-serif">BMS/fuse</text>
+<text x="797.4" y="488.5" font-size="10" fill="#a60" text-anchor="start" font-family="sans-serif">controller bay</text>
+<polygon points="784.0,555.0 820.0,579.0 865.7,474.6 822.5,382.2 766.0,555.0" stroke="#111" fill="#9db4d6" fill-opacity="1.0" stroke-width="2"/>
+<polygon points="418.0,615.0 472.0,627.0 472.0,555.0 418.0,555.0" stroke="#111" fill="#9db4d6" fill-opacity="1.0" stroke-width="2"/>
+<polygon points="418.0,555.0 368.9,535.9 362.9,417.9 244.4,417.9 244.4,468.9 308.9,523.9 418.0,591.0" stroke="#111" fill="#9db4d6" fill-opacity="0.55" stroke-width="1.5"/>
+<text x="338.9" y="408.9" font-size="11" fill="#222" text-anchor="start" font-family="sans-serif">tail / rear subframe</text>
+<polygon points="438.2,577.5 190.0,623.7 190.0,645.3 438.2,603.9" stroke="#111" fill="#7f99c4" fill-opacity="1.0" stroke-width="2"/>
+<circle cx="438.2" cy="590.7" r="9.6" stroke="#111" stroke-width="2" fill="#fff"/>
+<line x1="438.2" y1="590.7" x2="375.5" y2="594.5" stroke="#111" stroke-width="6"/>
+<line x1="375.5" y1="594.5" x2="389.3" y2="518.6" stroke="#c50" stroke-width="4"/>
+<polygon points="344.9,511.9 389.3,518.6 374.6,438.8" stroke="#c50" fill="#f2c7a5" fill-opacity="1.0" stroke-width="2"/>
+<line x1="374.6" y1="438.8" x2="262.4" y2="444.9" stroke="#a0a" stroke-width="14"/>
+<line x1="374.6" y1="438.8" x2="262.4" y2="444.9" stroke="#f3d4f3" stroke-width="8"/>
+<circle cx="375.5" cy="594.5" r="3.6" stroke="#000" stroke-width="1.5" fill="#fff"/>
+<text x="380.3" y="589.7" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">A</text>
+<circle cx="389.3" cy="518.6" r="3.6" stroke="#000" stroke-width="1.5" fill="#fff"/>
+<text x="394.1" y="513.8" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">B</text>
+<circle cx="374.6" cy="438.8" r="3.6" stroke="#000" stroke-width="1.5" fill="#fff"/>
+<text x="379.4" y="434.0" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">C</text>
+<circle cx="262.4" cy="444.9" r="3.6" stroke="#000" stroke-width="1.5" fill="#fff"/>
+<text x="267.2" y="440.1" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">S</text>
+<circle cx="344.9" cy="511.9" r="3.6" stroke="#000" stroke-width="1.5" fill="#fff"/>
+<text x="349.7" y="507.1" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">R</text>
+<circle cx="592.3" cy="140.1" r="8.4" stroke="#000" stroke-width="2" fill="#ffe066"/>
+<text x="604.3" y="142.5" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">CG GVW 190 kg, h=967</text>
+<text x="580.0" y="744.0" font-size="14" fill="#222" text-anchor="middle" font-family="sans-serif">wheelbase 1300 mm</text>
+<text x="1012.6" y="702.0" font-size="12" fill="#36c" text-anchor="start" font-family="sans-serif">trail 61</text>
+<text x="868.3" y="360.0" font-size="12" fill="#36c" text-anchor="start" font-family="sans-serif">head angle 65 deg</text>
+<text x="484.0" y="544.2" font-size="12" fill="#222" text-anchor="start" font-family="sans-serif">usable deck ~678 mm, deck top z=275</text>
+<text x="420.2" y="614.7" font-size="11" fill="#222" text-anchor="start" font-family="sans-serif">pivot</text>
+<text x="20" y="940" font-size="13" font-family="sans-serif">Rider aboard at sag. Dashed red: grown tyre at full compression (dotted = +clearance). Small dashed red: 160 mm rotor. Blue dashed: steering axis.</text>
+<text x="20" y="24" font-size="16" font-family="sans-serif" font-weight="bold">SK2V chassis - side layout (generated by tools/chassis/chassis_calc.py; 1 px = 1.67 mm)</text>
+<rect x="860" y="750" width="300" height="160" fill="#fff" stroke="#999"/>
+<polyline points="867.7,795.1 875.4,795.9 883.1,796.8 890.8,797.8 898.5,798.9 906.2,800.1 913.8,801.3 921.5,802.7 929.2,804.1 936.9,805.6 944.6,807.2 952.3,808.8 960.0,810.5 967.7,812.2 975.4,814.0 983.1,815.9 990.8,817.7 998.5,819.6 1006.2,821.6 1013.8,823.6 1021.5,825.6 1029.2,827.6 1036.9,829.6 1044.6,831.7 1052.3,833.8 1060.0,835.9 1067.7,837.9 1075.4,840.0 1083.1,842.1 1090.8,844.2 1098.5,846.3 1106.2,848.3 1113.8,850.4 1121.5,852.4 1129.2,854.4 1136.9,856.4 1144.6,858.3 1152.3,860.3 1160.0,862.1" fill="none" stroke="#a0a" stroke-width="2"/>
+<text x="866" y="766" font-size="12" font-family="sans-serif">rear leverage ratio vs wheel travel (2.66 to 2.16)</text>
+<text x="866" y="904" font-size="11" font-family="sans-serif">0 .. 151 mm; axis 1.8-3.0</text>
+</svg>

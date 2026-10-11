@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "SK2V host (sim)",
+            "compileCommands": "${workspaceFolder}/build-host/compile_commands.json",
+            "cStandard": "c11"
+        },
+        {
+            "name": "SK2V firmware (STM32G474)",
+            "compileCommands": "${workspaceFolder}/build-fw/compile_commands.json",
+            "cStandard": "c11"
+        }
+    ],
+    "version": 4
+}

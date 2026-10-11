@@ -1,0 +1,122 @@
+{
+  "_comment": "Master parameter table for the SK2V high-speed scooter chassis. Units: mm, kg, N, deg, km/h. Every derived number in docs/chassis/CHASSIS_DESIGN_SPEC.md comes from chassis_calc.py run on this file. Mirror these names as CAD global variables.",
+  "vehicle": {
+    "wheelbase_sag": 1300,
+    "vehicle_mass": 60,
+    "vehicle_cg_x_from_rear_axle": 650,
+    "vehicle_cg_z": 320,
+    "rider_mass_design": 120,
+    "rider_gear_mass": 10,
+    "rider_cg_above_deck": 990,
+    "rider_cg_x_from_rear_axle": 680,
+    "v_max_kmh": 120,
+    "cda_m2": 0.65,
+    "crr": 0.015,
+    "drivetrain_eff": 0.85
+  },
+  "tires": {
+    "design_tire": "11x3.0",
+    "speed_growth_pct_dia": 2.0,
+    "speed_growth_width": 3,
+    "list": {
+      "10x2.75": {
+        "od": 255,
+        "width": 75,
+        "rim_bead_dia": 165,
+        "max_rec_kmh": 80
+      },
+      "11x2.75": {
+        "od": 280,
+        "width": 90,
+        "rim_bead_dia": 165,
+        "max_rec_kmh": 120
+      },
+      "11x3.0": {
+        "od": 285,
+        "width": 102,
+        "rim_bead_dia": 165,
+        "max_rec_kmh": 120
+      }
+    }
+  },
+  "clearance": {
+    "tire_radial_min": 12,
+    "tire_lateral_min": 8,
+    "steer_lock_deg": 32,
+    "ground_clearance_sag": 155,
+    "deck_structure_height": 120,
+    "deck_width": 230
+  },
+  "front": {
+    "rake_deg": 25.0,
+    "fork_offset": 5,
+    "fork_travel_axial": 160,
+    "fork_sag_pct": 25,
+    "fork_a2c_extended": 325,
+    "lower_crown_thickness": 30,
+    "head_tube_length": 170,
+    "head_tube_od": 76,
+    "upper_crown_thickness": 30,
+    "bar_height": 1080,
+    "unsprung_mass_hubmotor": 11.0
+  },
+  "rear": {
+    "swingarm_length": 420,
+    "swingarm_angle_sag_deg": 10.0,
+    "wheel_travel_vertical": 155,
+    "sag_pct": 30,
+    "dropout_spacing": 140,
+    "shock_eye_to_eye": 205,
+    "shock_stroke": 65,
+    "shock_sag_pct_of_stroke": 30,
+    "lr_target_start": 2.65,
+    "lr_target_end": 2.15,
+    "sprung_mass_rear_fraction": 0.5
+  },
+  "linkage_seed": {
+    "_comment": "Hardpoints at sag, frame coords: x fwd from REAR axle, z up from ground. A = push-rod lower (on swingarm), R = rocker pivot (frame), B = rocker push-rod eye, C = rocker shock eye, S = shock frame eye. Overwritten by --optimise.",
+    "A": [309.1, 209.1],
+    "R": [258.1, 346.9],
+    "B": [332.1, 335.6],
+    "C": [307.6, 468.7],
+    "S": [120.7, 458.5]
+  },
+  "deck": {
+    "battery_bay_rear_x": 470,
+    "battery_bay_front_x": 1050,
+    "bulkhead_wall": 10,
+    "floor_thickness": 5,
+    "cover_thickness": 6,
+    "side_rail_width": 20
+  },
+  "battery": {
+    "cell": "21700",
+    "cell_dia_max": 21.7,
+    "cell_len_max": 70.8,
+    "holder_pitch": 22.5,
+    "holder_edge": 1.5,
+    "liner_each_side": 3.0,
+    "stack_height_allow": 86,
+    "end_zone_len": 85,
+    "cell_mass_kg": 0.07,
+    "cell_ah": 4.5,
+    "cell_v_nom": 3.6,
+    "wiring_channel_each_side": 11,
+    "_comment": "Bay layout front->rear: end zone (BMS, fuse, contactor/precharge, charge input) against the FRONT bulkhead, then cell block. Side channels: right = HV (rear phase leads), left = LV."
+  },
+  "brakes": {
+    "regen_share": 0.15,
+    "fraction_into_rotor": 0.9,
+    "front_energy_share": 0.85,
+    "rotor_band_width": 18,
+    "rotor_spider_mass_frac": 0.2,
+    "rotor_max_temp_rise_ok": 450,
+    "options": [
+      [160, 2.3],
+      [160, 3.0],
+      [180, 2.3],
+      [180, 3.0],
+      [203, 2.3]
+    ]
+  }
+}

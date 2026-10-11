@@ -1,0 +1,10 @@
+build*/
+third_party/cmsis/
+*.elf
+*.bin
+*.hex
+*.map
+compile_commands.json
+.cache/
+__pycache__/
+secrets/
