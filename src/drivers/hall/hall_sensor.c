@@ -87,8 +87,9 @@ void hall_update(hall_sensor_t *h, uint8_t state, uint32_t now)
             h->last_edge_cycles = now;
         }
         h->state = state;
-        h->valid = true;
     }
+    /* A wiring glitch may recover to the same sector without an edge. */
+    h->valid = true;
 
     float since = (float)(uint32_t)(now - h->last_edge_cycles) / h->cycles_per_s;
     float expected = (h->omega != 0.0f) ? SECTOR_RAD / absf(h->omega) : 0.0f;

@@ -17,10 +17,10 @@ void SysTick_Handler(void);
 void ADC1_2_IRQHandler(void);
 void USART2_IRQHandler(void);
 
-void NMI_Handler(void) __attribute__((weak, alias("HardFault_Handler")));
-void MemManage_Handler(void) __attribute__((weak, alias("HardFault_Handler")));
-void BusFault_Handler(void) __attribute__((weak, alias("HardFault_Handler")));
-void UsageFault_Handler(void) __attribute__((weak, alias("HardFault_Handler")));
+void NMI_Handler(void) __attribute__((weak, alias("Default_Handler")));
+void MemManage_Handler(void) __attribute__((weak, alias("Default_Handler")));
+void BusFault_Handler(void) __attribute__((weak, alias("Default_Handler")));
+void UsageFault_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void SVC_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void DebugMon_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void PendSV_Handler(void) __attribute__((weak, alias("Default_Handler")));

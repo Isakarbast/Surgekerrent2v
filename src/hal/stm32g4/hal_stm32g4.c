@@ -398,9 +398,18 @@ bool hal_uart_read_byte(uint8_t *b) { return rb_get(&s_uart_rx, b); }
 #define CAN_RAM_TXB_OFF    (0x278u / 4u)
 #define CAN_ELEM_WORDS     18u
 
+#define CAN_SEG1_TQ        135u
+#define CAN_SEG2_TQ        34u
+#define CAN_BIT_TQ         (1u + CAN_SEG1_TQ + CAN_SEG2_TQ)
+
+/* The slower supported rates divide 1 Mbps, so exact timing at the highest
+ * rate proves that the prescaler calculation is exact for all four rates. */
+_Static_assert(SYSCLK_HZ % (1000000u * CAN_BIT_TQ) == 0u,
+               "CAN timing must support an exact 1 Mbps bitrate");
+
 void hal_can_init(uint32_t bitrate)
 {
-    /* Classic CAN rates that divide 170 MHz / 20 tq exactly; else 500k. */
+    /* Classic CAN rates that divide 170 MHz / 170 tq exactly; else 500k. */
     if (bitrate != 125000u && bitrate != 250000u && bitrate != 500000u && bitrate != 1000000u)
         bitrate = 500000u;
     RCC->CCIPR = (RCC->CCIPR & ~RCC_CCIPR_FDCANSEL) | (2u << RCC_CCIPR_FDCANSEL_Pos); /* PCLK1 */
@@ -415,10 +424,11 @@ void hal_can_init(uint32_t bitrate)
     FDCAN1->CCCR &= ~(FDCAN_CCCR_FDOE | FDCAN_CCCR_BRSE);   /* classic CAN */
     FDCAN1->CCCR |= FDCAN_CCCR_DAR;                        /* no auto-retransmit: status is periodic */
 
-    /* 20 time quanta per bit: 1 sync + 15 seg1 + 4 seg2 -> 80 % sample point. */
-    uint32_t brp = SYSCLK_HZ / (bitrate * 20u);
-    FDCAN1->NBTP = ((4u - 1u) << FDCAN_NBTP_NSJW_Pos) | ((brp - 1u) << FDCAN_NBTP_NBRP_Pos) |
-                   ((15u - 1u) << FDCAN_NBTP_NTSEG1_Pos) | ((4u - 1u) << FDCAN_NBTP_NTSEG2_Pos);
+    /* 170 time quanta: 1 sync + 135 seg1 + 34 seg2 -> 80 % sample point.
+     * Prescalers 8/4/2/1 give exact 125k/250k/500k/1M bitrates. */
+    uint32_t brp = SYSCLK_HZ / (bitrate * CAN_BIT_TQ);
+    FDCAN1->NBTP = ((CAN_SEG2_TQ - 1u) << FDCAN_NBTP_NSJW_Pos) | ((brp - 1u) << FDCAN_NBTP_NBRP_Pos) |
+                   ((CAN_SEG1_TQ - 1u) << FDCAN_NBTP_NTSEG1_Pos) | ((CAN_SEG2_TQ - 1u) << FDCAN_NBTP_NTSEG2_Pos);
 
     memset((void *)SRAMCAN_BASE, 0, 0x350);                 /* clear instance 1 message RAM */
     FDCAN1->RXGFC = 0; /* accept all std + ext into FIFO0; filter in software */

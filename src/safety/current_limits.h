@@ -14,7 +14,8 @@
 typedef struct {
     float vbus;
     float temp_fet, temp_motor;
-    bool temp_motor_valid;
+    bool temp_motor_enabled;
+    bool temp_motor_fault;
     float erpm;
     float speed_kmh;
     float vq_abs;          /* filtered |vq| for battery-current estimation */

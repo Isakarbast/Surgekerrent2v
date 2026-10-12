@@ -55,6 +55,11 @@ a CAN BMS, rely on `battery_voltage_max` / `overvoltage_trip` and the TVS.
 **Brake always wins.** The brake switch cuts drive torque within 1 ms, whatever the throttle does.
 Regen fades to zero near standstill so the motor never drives backwards.
 
+**Motor temperature sensor failure.** An open or shorted configured motor NTC raises `temp_sensor`,
+sets both current allowances to zero, and stops PWM (including field weakening and motor detection).
+Normal temperature derating resumes when valid readings return. Setting `motor.ntc_r25 = 0` explicitly
+disables this sensor; an absent sensor is not treated as a failed configured sensor.
+
 **Detection spins the motor.** `START_DETECTION` is only accepted while stopped and idle. **The wheel must
 be off the ground.** Use test current `min(0.3 · motor_current_max, 15 A)`.
 

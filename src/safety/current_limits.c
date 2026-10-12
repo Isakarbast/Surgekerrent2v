@@ -14,8 +14,9 @@ void limits_compute(const app_config_t *cfg, const limits_input_t *in, limits_ou
     const vehicle_config_t *v = &cfg->vehicle;
 
     out->k_temp_fet = fold(in->temp_fet, l->temp_fet_start_c, l->temp_fet_max_c);
-    out->k_temp_motor = in->temp_motor_valid
-        ? fold(in->temp_motor, cfg->motor.temp_motor_start_c, cfg->motor.temp_motor_max_c)
+    out->k_temp_motor = in->temp_motor_enabled
+        ? (in->temp_motor_fault ? 0.0f
+           : fold(in->temp_motor, cfg->motor.temp_motor_start_c, cfg->motor.temp_motor_max_c))
         : 1.0f;
     float k_temp = minf(out->k_temp_fet, out->k_temp_motor);
 

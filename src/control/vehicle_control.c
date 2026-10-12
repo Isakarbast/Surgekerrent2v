@@ -104,9 +104,11 @@ static void check_voltage_temp(vehicle_t *v)
     /* A failed FET sensor is serious: we can no longer protect the power stage.
      * Force heavy derating by pretending we're at the start threshold. */
     if (v->ntc_fet.fault) {
-        fault_raise(FAULT_TEMP_SENSOR);
         v->ntc_fet.temp_c = maxf(v->ntc_fet.temp_c, 0.5f * (l->temp_fet_start_c + l->temp_fet_max_c));
-    } else if (!v->ntc_motor.fault) {
+    }
+    if (v->ntc_fet.fault || (m->ntc_r25 > 0.0f && v->ntc_motor.fault)) {
+        fault_raise(FAULT_TEMP_SENSOR);
+    } else {
         fault_clear_auto(FAULT_TEMP_SENSOR);
     }
 }
@@ -203,6 +205,7 @@ void vehicle_medium_loop(void)
     }
     check_supervision(v);
     check_sensors(v);
+    bool motor_temp_fault = cfg->motor.ntc_r25 > 0.0f && v->ntc_motor.fault;
 
     float erpm = mc_erpm();
     v->speed_kmh = vehicle_erpm_to_kmh(cfg, erpm);
@@ -213,7 +216,8 @@ void vehicle_medium_loop(void)
         .vbus = g_mc.vs.vbus_filt,
         .temp_fet = v->ntc_fet.temp_c,
         .temp_motor = v->ntc_motor.temp_c,
-        .temp_motor_valid = cfg->motor.ntc_r25 > 0.0f && !v->ntc_motor.fault,
+        .temp_motor_enabled = cfg->motor.ntc_r25 > 0.0f,
+        .temp_motor_fault = v->ntc_motor.fault,
         .erpm = erpm,
         .speed_kmh = v->speed_kmh,
         .vq_abs = g_mc.vq_abs_filt,
@@ -236,8 +240,9 @@ void vehicle_medium_loop(void)
     /* Torque request with brake priority */
     float target;
     bool braking = brake_cut_drive(&v->brake);
-    if (g_mc.state == MC_STATE_DETECT && (braking || throttle > 0.0f)) {
-        /* Rider intervention always wins over a running detection. */
+    if (g_mc.state == MC_STATE_DETECT && (braking || throttle > 0.0f || motor_temp_fault)) {
+        /* Detection bypasses the torque limits; stop it on sensor failure
+         * as well as rider intervention. */
         mc_abort_detection();
     }
     if (fault_blocks_drive() || g_mc.state == MC_STATE_DETECT) {
@@ -268,6 +273,9 @@ void vehicle_medium_loop(void)
     float rate = cfg->limits.current_ramp_a_per_s * DT;
     bool releasing = absf(v->iq_target) < absf(v->iq_cmd) || signf(v->iq_target) != signf(v->iq_cmd);
     v->iq_cmd = ramp_towards(v->iq_cmd, v->iq_target, releasing ? 5.0f * rate : rate);
+    /* The ramp controls rider demand, but a reduced safety/BMS/profile limit
+     * must constrain the command sent to the fast loop in this same tick. */
+    v->iq_cmd = clampf(v->iq_cmd, -v->lim.iq_regen_max, v->lim.iq_drive_max);
     mc_set_current_command(v->iq_cmd);
 
     /* Run / coast decision */
@@ -276,5 +284,8 @@ void vehicle_medium_loop(void)
     else if (v->idle_ms < 0xFFFFFFFFu) v->idle_ms++;
     bool keep_sync = (cfg->foc.sensor_mode == SENSOR_MODE_SENSORLESS) &&
                      absf(erpm) > 0.5f * cfg->foc.hall_observer_crossover_erpm;
-    mc_request_run(!fault_blocks_drive() && app_motor_ready(cfg) && (want_torque || v->idle_ms < COAST_DELAY_MS || keep_sync));
+    /* A failed motor sensor also stops d-axis current during the coast delay
+     * or sensorless synchronisation; zero Iq alone would leave FW active. */
+    mc_request_run(!fault_blocks_drive() && !motor_temp_fault && app_motor_ready(cfg) &&
+                   (want_torque || v->idle_ms < COAST_DELAY_MS || keep_sync));
 }

@@ -77,6 +77,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Generic")
     )
     target_compile_definitions(sk2v_fw.elf PRIVATE STM32G474xx BOARD_${SK2V_BOARD})
     target_compile_options(sk2v_fw.elf PRIVATE ${WARN_FLAGS})
+    target_link_libraries(sk2v_fw.elf PRIVATE m)
     target_link_options(sk2v_fw.elf PRIVATE
         -T${CMAKE_SOURCE_DIR}/ld/stm32g474re.ld
         -Wl,-Map=sk2v_fw.map -Wl,--print-memory-usage)
@@ -100,4 +101,9 @@ else()
     add_executable(test_system tests/test_system.c)
     target_link_libraries(test_system PRIVATE sk2v_core)
     add_test(NAME system COMMAND test_system)
+
+    add_executable(test_safety tests/test_safety.c)
+    target_link_libraries(test_safety PRIVATE sk2v_core)
+    target_link_options(test_safety PRIVATE -Wl,--wrap=hal_adc_read_slow)
+    add_test(NAME safety COMMAND test_safety)
 endif()

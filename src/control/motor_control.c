@@ -163,7 +163,7 @@ static void update_angle(motor_control_t *m)
             m->angle_src = MC_ANGLE_HALL;
         }
         /* Hall failure at speed: stay on the observer if it is healthy. */
-        if (m->hall.fault && erpm > x) m->angle_src = MC_ANGLE_OBSERVER;
+        if (m->hall.fault && m->obs_locked && erpm > x) m->angle_src = MC_ANGLE_OBSERVER;
         break;
     }
     }
@@ -300,14 +300,16 @@ void mc_fast_loop(void)
             m->state = fault_blocks_drive() ? MC_STATE_FAULT : MC_STATE_IDLE;
             break;
         }
-        if (m->angle_src == MC_ANGLE_HALL && !m->hall.valid) {
+        if (m->angle_src == MC_ANGLE_HALL && (!m->hall.valid || m->hall.fault)) {
             fault_raise(FAULT_HALL);
             outputs_off(m);
             m->state = MC_STATE_FAULT;
             break;
         }
-        if (m->angle_src == MC_ANGLE_OBSERVER && m->obs_locked &&
-            absf(m->obs.flux_err) > OBS_FAULT_FLUX_ERR) {
+        /* A bad flux estimate clears obs_locked in update_angle(). Do not
+         * require that lock here, or the fault would never be raised. */
+        if (m->angle_src == MC_ANGLE_OBSERVER &&
+            !(absf(m->obs.flux_err) <= OBS_FAULT_FLUX_ERR)) {
             fault_raise(FAULT_OBSERVER);
             outputs_off(m);
             m->state = MC_STATE_FAULT;
@@ -317,8 +319,15 @@ void mc_fast_loop(void)
          * we regulate zero current until the observer locks, then apply torque. */
         float iq = m->iq_cmd;
         if (m->cfg->foc.sensor_mode == SENSOR_MODE_SENSORLESS && !m->obs_locked) iq = 0.0f;
-        m->foc.iq_ref = iq;
-        m->foc.id_ref = fw_update(&m->fw, iq, m->foc.modulation, m->dt);
+        const limits_config_t *l = &m->cfg->limits;
+        float i_max = iq < 0.0f ? l->motor_current_regen_max : l->motor_current_max;
+        iq = clampf(iq, -i_max, i_max);
+        /* Phase amplitude is sqrt(Id^2 + Iq^2). Reserve the d-axis current
+         * first so limiting torque does not remove needed field weakening. */
+        float id = clampf(fw_update(&m->fw, iq, m->foc.modulation, m->dt), -i_max, 0.0f);
+        float iq_max = fast_sqrtf(i_max * i_max - id * id);
+        m->foc.id_ref = id;
+        m->foc.iq_ref = clampf(iq, -iq_max, iq_max);
         foc_ctrl_step(&m->foc, m->i_abc, m->theta, m->omega, vbus, m->dt);
         break;
     }

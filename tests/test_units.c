@@ -185,7 +185,7 @@ static void test_limits_derating(void)
     app_config_t cfg;
     config_load_defaults(&cfg);
     limits_input_t in = {.vbus = 50.0f, .temp_fet = 30.0f, .temp_motor = 30.0f,
-                         .temp_motor_valid = true, .erpm = 0, .speed_kmh = 0, .vq_abs = 1.0f,
+                         .temp_motor_enabled = true, .erpm = 0, .speed_kmh = 0, .vq_abs = 1.0f,
                          .batt_drive_cap = -1.0f, .batt_regen_cap = -1.0f};
     limits_output_t o;
     limits_compute(&cfg, &in, &o);
@@ -406,6 +406,25 @@ static void test_envelope_rejects_bad_calibration(void)
     CHECK(envelope_check_config(&c) == ENV_OK);
 }
 
+static void test_hall_recovers_without_sector_change(void)
+{
+    const float angles[8] = {-1.0f, 0.0f, 2.0f * M_PI_F / 3.0f, M_PI_F / 3.0f,
+                            4.0f * M_PI_F / 3.0f, 5.0f * M_PI_F / 3.0f, M_PI_F, -1.0f};
+    const uint8_t invalid_codes[] = {0, 7};
+    for (unsigned i = 0; i < 2; i++) {
+        hall_sensor_t h;
+        hall_init(&h, angles, 170000000.0f);
+        hall_update(&h, 1, 1000);
+        CHECK(h.valid);
+        hall_update(&h, invalid_codes[i], 2000);
+        CHECK(!h.valid);
+        hall_update(&h, 1, 3000);
+        CHECK(h.valid);
+        CHECK_NEAR(h.theta, angles[1], 1e-5f);
+        CHECK(h.omega == 0.0f);
+    }
+}
+
 int main(void)
 {
     RUN_TEST(test_sha256_hmac_vectors);
@@ -422,6 +441,7 @@ int main(void)
     RUN_TEST(test_current_sense);
     RUN_TEST(test_throttle_safety);
     RUN_TEST(test_hall_speed);
+    RUN_TEST(test_hall_recovers_without_sector_change);
     RUN_TEST(test_limits_derating);
     RUN_TEST(test_mtpa);
     RUN_TEST(test_config_storage);

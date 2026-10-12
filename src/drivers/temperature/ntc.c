@@ -26,8 +26,8 @@ float ntc_counts_to_celsius(float counts, float r_pullup, float r25, float beta)
 float ntc_update(ntc_t *n, uint16_t raw)
 {
     if (n->r25 <= 0.0f) return n->temp_c; /* disabled */
-    /* <1 % or >99 % of range: open circuit / short. Report as hot so
-     * derating kicks in - failing safe for a thermal sensor. */
+    /* <1 % or >99 % of range: open circuit / short. Retain the last
+     * temperature; vehicle_control applies derating from the fault flag. */
     if (raw < BOARD_ADC_MAX_COUNTS * 0.01f || raw > BOARD_ADC_MAX_COUNTS * 0.99f) {
         n->fault = true;
         return n->temp_c;
