@@ -1,4 +1,8 @@
 # Surgekurrent2v
+
+# This repo will be closed later, and have a new one with a new shorter and simpler firmware to understand.
+while still having everything this one has. so yes a shorter and more efficient firmware. and no ai in it but from debuging or reviewing the code, which will be comfirmed by either me isakarbast or another surge team memeber.
+
 # Unfinished do not use
 Field-oriented control (FOC) firmware for e-scooter and e-bike hub/mid motors.
 Target: **STM32G474** (Cortex-M4F, 170 MHz) with 3 low-side shunts and a DRV8353 gate driver.
